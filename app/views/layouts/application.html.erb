@@ -5,10 +5,10 @@
 	<%= stylesheet_link_tag 'baseline.compress' %>
 	<%= stylesheet_link_tag 'screen' %>
 	
-  <script type="text/javascript" charset="utf-8" src="/javascripts/raphael-min.js"></script>
-  <script type="text/javascript" charset="utf-8" src="/javascripts/g.raphael-min.js"></script>
-  <script type="text/javascript" charset="utf-8" src="/javascripts/g.stream.js"></script>
-
+	<%= javascript_include_tag 'raphael-min' %>
+	<%= javascript_include_tag 'g.raphael-min' %>
+	<%= javascript_include_tag 'g.stream.js' %>
+	
   <%= yield :head %>
 
 	<title>echonest stream graph experiment</title>
