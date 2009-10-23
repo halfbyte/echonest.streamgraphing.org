@@ -8,33 +8,25 @@
   <script type="text/javascript" charset="utf-8" src="/javascripts/raphael-min.js"></script>
   <script type="text/javascript" charset="utf-8" src="/javascripts/g.raphael-min.js"></script>
   <script type="text/javascript" charset="utf-8" src="/javascripts/g.stream.js"></script>
-  <script type="text/javascript" charset="utf-8">
 
-    var yf = [];
-    window.onload = function() {
-      var yd = <%= @data.to_json %>;
-      
-      
-      
-      var r = Raphael("holder", 730, 400);
-      
-      // r.g.streamGraph(yd, 10, 10, 200, 400, r.g.StreamGraph.themeRiver);
-      r.g.streamGraph(r.g.StreamGraph.sortRowsByVariance(yd), 0, 0, 730, 400, r.g.StreamGraph.wiggle);
-      // r.g.streamGraph(yd, 420, 10, 200, 200, r.g.StreamGraph.weightedWiggle);
-      
-    }
-  </script>
-  
-	<title>stream graph experiment</title>
+  <%= yield :head %>
+
+	<title>echonest stream graph experiment</title>
 	
 </head>
 
 <body class="page-grid">
   <div id="page" class="layout-grid">
     <header id="branding" class="width4">
-      <h1>streamgraphing.org</h1>
+      <h1>echonest.streamgraphing.org</h1>
     </header>
-    <%= yield %>
+    <div class="width4 first">
+      <%= yield %>
+    </div>
+    
+    <div id="footer" class="width4 first">
+      &copy; 2009 <a href="http://mindmatters.de">mindmatters GmbH &amp; Co. KG</a>. A <a href="http://musichackday.org">music hack day</a> experiment by Jan Krutisch &amp; Wolfgang Wopperer.
+    </div>
   </div>
 </body>
 </html>
