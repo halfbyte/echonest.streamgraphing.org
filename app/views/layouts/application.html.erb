@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<%= stylesheet_link_tag 'baseline.compress' %>
+	<%= stylesheet_link_tag 'screen' %>
+	
+  <script type="text/javascript" charset="utf-8" src="/javascripts/raphael-min.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/javascripts/g.raphael-min.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/javascripts/g.stream.js"></script>
+  <script type="text/javascript" charset="utf-8">
+
+    var yf = [];
+    window.onload = function() {
+      var yd = <%= @data.to_json %>;
+      
+      
+      
+      var r = Raphael("holder", 730, 400);
+      
+      // r.g.streamGraph(yd, 10, 10, 200, 400, r.g.StreamGraph.themeRiver);
+      r.g.streamGraph(r.g.StreamGraph.sortRowsByVariance(yd), 0, 0, 730, 400, r.g.StreamGraph.wiggle);
+      // r.g.streamGraph(yd, 420, 10, 200, 200, r.g.StreamGraph.weightedWiggle);
+      
+    }
+  </script>
+  
+	<title>stream graph experiment</title>
+	
+</head>
+
+<body class="page-grid">
+  <div id="page" class="layout-grid">
+    <header id="branding" class="width4">
+      <h1>streamgraphing.org</h1>
+    </header>
+    <%= yield %>
+  </div>
+</body>
+</html>
