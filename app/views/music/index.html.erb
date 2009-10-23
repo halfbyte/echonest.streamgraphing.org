@@ -1,0 +1,19 @@
+<div class="width4">
+  <h2>Echonest's HOTTT artists</h2>
+  <p>The following graph shows the number of news articles and blog entries for the hotttest artists as taken from the echonest api and feeds.</p>
+  <p>The posts are aggregated by week.</p>
+</div>
+<div class="column width3 first">
+  <div id="holder"></div>
+</div>
+<div class="column width1">
+  <h3>Artists shown</h3>
+  <ul>
+  <%- @artists.each do |artist| -%>
+  <li><%= artist %></li>
+  <%- end -%>
+  </ul>
+  <%- form_tag(root_url, :method => :get) do -%>
+    <label><%= select_tag("weeks", options_for_select([["all", ""], "12", "24", "53"], params[:weeks]), :onchange => "this.form.submit()") %> Weeks</label>
+  <%- end -%>
+</div>

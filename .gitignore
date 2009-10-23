@@ -1,0 +1,14 @@
+database.yml
+*.log
+tmp/**/*
+.DS_Store
+.rsync_cache
+restart.txt
+public/system
+coverage
+test/reports
+*.tmproj
+public/stylesheets/compiled/*
+tmp/output.xml
+scratch_directory
+data/
