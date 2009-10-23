@@ -1,7 +1,20 @@
+<%- content_for :head do -%>
+<script type="text/javascript" charset="utf-8">
+  window.onload = function() {
+    var yd = <%= @data.to_json %>;
+    var r = Raphael("holder", 730, 400);
+    r.g.streamGraph(r.g.StreamGraph.sortRowsByVariance(yd), 0, 0, 730, 400, r.g.StreamGraph.wiggle);
+  }
+</script>
+<%- end -%>
 <div class="width4">
-  <h2>Echonest's HOTTT artists</h2>
-  <p>The following graph shows the number of news articles and blog entries for the hotttest artists as taken from the echonest api and feeds.</p>
-  <p>The posts are aggregated by week.</p>
+  <h2>News/Blogs on hottt artists</h2>
+  <p>The following graph shows the number of news articles and blog entries for the hotttest artists as taken from the <a href="http://echonest.com">echonest api and feeds</a>. The posts are aggregated by week.</p>
+  <p>
+    The visualisation follows the Streamgraph pattern as described by <a href="http://www.leebyron.com/else/streamgraph/">Lee Byron and Martin Wattenberg</a>.
+    If you are interested, this currently uses the "wiggle" correction, as we have some problems with the "weighted wiggle" algo if the dataset is as sparse as ours.
+    The graph is rendered using a self written <a href="http://g.raphaeljs.com/">g.raphael</a> plugin which is not quite finished yet. (The obvious addition would be data labels of course).
+  </p>
 </div>
 <div class="column width3 first">
   <div id="holder"></div>
