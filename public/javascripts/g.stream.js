@@ -127,7 +127,6 @@ Raphael.fn.g.streamGraph = function(rawData, x, y, w, h, fun) {
 
   var data = fun(rawData);
   var xScale = w / (data[0].length - 1)
-  console.log(xScale)
   
   var max = this.g.StreamGraph.max(data[0]);
   var min = this.g.StreamGraph.min(data[data.length-1])
@@ -137,7 +136,8 @@ Raphael.fn.g.streamGraph = function(rawData, x, y, w, h, fun) {
   var forwardPathFor = function(data) {
     // TODO: Start-Splines brauchen Control-Point für Anfang!
     var path = "M" + x + " " + (middle - (data[0] * scale));
-    for(var col=1;col<data.length;col++) {
+    path += "C" + (x + ((0 + 0.4) * xScale)) + " " + (middle - (data[0] * scale)) + " "  + (x + ((1 - 0.4) * xScale)) + " " + (middle - (data[1] * scale)) + " " + (x + (1 * xScale)) + " " + (middle - (data[1] * scale));
+    for(var col=2;col<data.length;col++) {
       path += "S" + (x + ((col - 0.4) * xScale)) + " " + (middle - (data[col] * scale)) + " " + (x + (col * xScale)) + " " + (middle - (data[col] * scale));
     }
     return path;
@@ -146,7 +146,8 @@ Raphael.fn.g.streamGraph = function(rawData, x, y, w, h, fun) {
   var backwardPathFor = function(data) {
     // TODO: Start-Splines brauchen Control-Point für Anfang!
     var path = "L" + (x + ((data.length-1) * xScale)) + " " + ((y+middle) - (data[data.length-1]) * scale);
-    for(var col=data.length-2;col>=0;col--) {
+    path += "C" + (x + (((data.length-1) - 0.4) * xScale)) + " " + (middle - (data[(data.length-1)] * scale)) + " " + (x + (((data.length-2) + 0.4) * xScale)) + " " + (middle - (data[(data.length-2)] * scale)) + " " + (x + ((data.length-2) * xScale)) + " " + (middle - (data[(data.length-2)] * scale));
+    for(var col=data.length-3;col>=0;col--) {
       path += "S" + (x + ((col + 0.4) * xScale)) + " " + (middle - (data[col] * scale)) + " " + (x + (col * xScale)) + " " + (middle - (data[col] * scale));
     }
     path += "z"
@@ -156,7 +157,6 @@ Raphael.fn.g.streamGraph = function(rawData, x, y, w, h, fun) {
   for(var row=0;row<data.length-1; row++) {
     var path = forwardPathFor(data[row]);
     path += backwardPathFor(data[row+1]);
-    
     
     this.path(path).attr({fill: Raphael.getColor(), stroke:"#000", "stroke-width": 0});
   }
