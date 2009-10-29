@@ -1,10 +1,33 @@
 <%- content_for :head do -%>
 <script type="text/javascript" charset="utf-8">
-  window.onload = function() {
-    var yd = <%= @data.to_json %>;
+  var graph = null;
+  $(function() {
+    var yd = <%= @y_data.to_json %>;
+    var xd = <%= @x_data.to_json %>;
+    var artists = <%= @artists.to_json %>;
     var r = Raphael("holder", 730, 400);
-    r.g.streamGraph(r.g.StreamGraph.sortRowsByVariance(yd), 0, 0, 730, 400, r.g.StreamGraph.wiggle);
-  }
+    graph = r.g.streamGraph(0, 0, 730, 400,xd,yd, { variant: "wiggle", labels: artists }).hover(
+      function() {
+        this.attr({"fill-opacity":0.6});
+        $("#artist_" + artists.indexOf(this.label)).addClass("active")
+      },
+      function() {
+        this.attr({"fill-opacity":1});
+        $("#artist_" + artists.indexOf(this.label)).removeClass("active")
+      }
+    );
+    
+    $(".artist-highlight").mouseover(function() {
+      $(this).addClass("active")
+      var artistIndex = this.id.match(/artist_(\d+)/)[1];
+      graph.segments[artistIndex].attr({"fill-opacity":0.6});
+    }).mouseout(function() {
+      $(this).removeClass("active");
+      var artistIndex = this.id.match(/artist_(\d+)/)[1];
+      graph.segments[artistIndex].attr({"fill-opacity":1});      
+    })
+    
+  });
 </script>
 <%- end -%>
 <div class="width4">
@@ -22,8 +45,8 @@
 <div class="column width1">
   <h3>Artists shown</h3>
   <ul>
-  <%- @artists.each do |artist| -%>
-  <li><%= artist %></li>
+  <%- @artists.each_with_index do |artist, i| -%>
+  <li id="artist_<%= i %>" class="artist-highlight"><%= artist %></li>
   <%- end -%>
   </ul>
   <%- form_tag(root_url, :method => :get) do -%>

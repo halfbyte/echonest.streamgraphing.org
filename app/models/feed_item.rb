@@ -29,6 +29,7 @@ class FeedItem < ActiveRecord::Base
     current_week = 0
     
     data = []
+    weeks = []
     self.artists.length.times { data << [] }
     
     loop do
@@ -48,12 +49,13 @@ class FeedItem < ActiveRecord::Base
       items_per_artist.each do |artist, count|
         data[artists.index(artist)][current_week] = count
       end
+      weeks[current_week] = "CW#{cw} #{year}"
       current_week += 1
       
     end
     # self.artists.length.times { |i| data[i] << 0 }
     # self.artists.length.times { |i| data[i] << 0 }
-    data
+    [weeks, data]
     
   end
 
