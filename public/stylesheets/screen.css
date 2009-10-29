@@ -1,3 +1,4 @@
 #page { width: 990px; padding: 0 18px; margin: 0 auto; }
 #holder svg { border:1px solid black; background:#fff;}
 #footer { margin-top: 2em; padding-top: 2em; border-top: 1px solid black;}
+li.active { color:red; background-color:#eee;}

@@ -120,12 +120,25 @@ Raphael.fn.g.StreamGraph = {
 
 }
 
-Raphael.fn.g.streamGraph = function(rawData, x, y, w, h, fun) {
-  if(!fun) {    
-    fun = this.g.StreamGraph.weightedWiggle;
+Raphael.fn.g.streamGraph = function(x, y, w, h, valuesx, valuesy, opts) {
+  
+  opts = opts || {};
+  
+  if (!this.raphael.is(valuesx[0], "array")) {
+      valuesx = [valuesx];
+  }
+  if (!this.raphael.is(valuesy[0], "array")) {
+      valuesy = [valuesy];
+  }
+  
+  var fun = this.g.StreamGraph.wiggle;
+  if(opts.variant) {
+    if(opts.variant == 'wiggle') fun = this.g.StreamGraph.wiggle;
+    if(opts.variant == 'weightedWiggle') fun = this.g.StreamGraph.weightedWiggle;
+    if(opts.variant == 'themeRiver') fun = this.g.StreamGraph.themeRiver;
   }
 
-  var data = fun(rawData);
+  var data = fun(valuesy);
   var xScale = w / (data[0].length - 1)
   
   var max = this.g.StreamGraph.max(data[0]);
@@ -133,6 +146,22 @@ Raphael.fn.g.streamGraph = function(rawData, x, y, w, h, fun) {
   var size = max - min;
   var scale = h / size;
   var middle = (max * scale);
+  
+  var chart = this.set();
+  
+  var segments = this.set();
+  var labels = opts.labels || [];
+  chart.push(segments);
+  chart.segments = segments;
+  chart.labels = labels;
+  
+  
+  
+  chart.hover = function(fin, fout) {
+    segments.mouseover(fin).mouseout(fout);
+    return this;    
+  }
+  
   var forwardPathFor = function(data) {
     // TODO: Start-Splines brauchen Control-Point für Anfang!
     var path = "M" + x + " " + (middle - (data[0] * scale));
@@ -157,8 +186,9 @@ Raphael.fn.g.streamGraph = function(rawData, x, y, w, h, fun) {
   for(var row=0;row<data.length-1; row++) {
     var path = forwardPathFor(data[row]);
     path += backwardPathFor(data[row+1]);
-    
-    this.path(path).attr({fill: Raphael.getColor(), stroke:"#000", "stroke-width": 0});
+    segments.push(segment = this.path(path).attr({fill: Raphael.getColor(), stroke:"#000", "stroke-width": 0}));
+    segment.label = labels[row];
   }
+  return(chart);
   // this.path(forwardPathFor(data[data.length-1])).attr({stroke: "#000"});
 }
