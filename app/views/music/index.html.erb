@@ -43,12 +43,8 @@
 <%- end -%>
 <div class="width4">
   <h2>News/Blogs on hottt artists</h2>
-  <p>The following graph shows the number of news articles and blog entries for the hotttest artists as taken from the <a href="http://echonest.com">echonest api and feeds</a>. The posts are aggregated by week.</p>
-  <p>
-    The visualisation follows the Streamgraph pattern as described by <a href="http://www.leebyron.com/else/streamgraph/">Lee Byron and Martin Wattenberg</a>.
-    If you are interested, this currently uses the "wiggle" correction, as we have some problems with the "weighted wiggle" algo if the dataset is as sparse as ours.
-    The graph is rendered using a self written <a href="http://g.raphaeljs.com/">g.raphael</a> plugin which is not quite finished yet. You can find a rather current version in the 
-  </p>
+  <p>News and blog articles on the hotttest artists, as aggregated by <a href="http://echonest.com">echonest</a>. Aggregated by week. Clicking on an artist shows you the latest articles.</p>
+  
 </div>
 <div class="column width3 first">
   <div id="holder"></div>
@@ -64,5 +60,10 @@
   <%- form_tag(root_url, :method => :get) do -%>
     <label><%= select_tag("weeks", options_for_select([["all", ""], "12", "24", "53"], params[:weeks]), :onchange => "this.form.submit()") %> Weeks</label>
   <%- end -%>
+</div>
+<div class="width4 first">
+    The visualisation follows the Streamgraph pattern as described by <a href="http://www.leebyron.com/else/streamgraph/">Lee Byron and Martin Wattenberg</a>.
+    If you are interested, this currently uses the "wiggle" correction, as we have some problems with the "weighted wiggle" algo if the dataset is as sparse as ours.
+    The graph is rendered using a self written <a href="http://g.raphaeljs.com/">g.raphael</a> plugin which is <a href="http://github.com/halfbyte/echonest.streamgraphing.org">not quite finished yet</a>.
 </div>
 <div class="column width4 first" id="articles"></div>

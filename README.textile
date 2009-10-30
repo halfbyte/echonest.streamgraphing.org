@@ -1,0 +1,15 @@
+h1. echonest.streamgraphing.org
+
+This is our (Jan Krutisch and Wolfgang Wopperer of mindmatters) contribution to the "music hack day":http://musichackday.org amsterdam 2009.
+
+It visualizes 
+
+The visualisation follows the Streamgraph pattern as described by "Lee Byron and Martin Wattenberg":http://www.leebyron.com/else/streamgraph/
+If you are interested, this currently uses the "wiggle" correction, as we have some problems with the "weighted wiggle" algo if the dataset is as sparse as ours.
+The graph is rendered using a self written "g.raphael":http://g.raphaeljs.com/ plugin which is not quite finished yet.
+
+h2. Get it to work
+
+You'll need an echonest api key and either set an environment variable ECHONEST_API_KEY or create config/api_keys.yml which contains an echonest: entry.
+
+Calling rake cron once a day is a good idea to populate the database.
