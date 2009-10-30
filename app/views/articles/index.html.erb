@@ -1,0 +1,10 @@
+<h2>Articles <%= "for '#{h(@artist)}'" unless @artist.blank? %></h2>
+<ul class="article-list">
+  <%- @articles.each do |article| %>
+  <li>
+    <h3><%= link_to h(article.title), article.link %></h3>
+    <%= simple_format(sanitize(article.description)) %>
+  </li>
+  <%- end -%>
+  
+</ul>

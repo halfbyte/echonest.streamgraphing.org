@@ -2,3 +2,6 @@
 #holder svg { border:1px solid black; background:#fff;}
 #footer { margin-top: 2em; padding-top: 2em; border-top: 1px solid black;}
 li.active { color:red; background-color:#eee;}
+ul.article-list { list-style-type: none; margin:0; padding:0;}
+ul.article-list li {  margin-bottom: 1em; }
+ul.article-list li h3 {  margin-bottom: 0.5em; }

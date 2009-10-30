@@ -7,5 +7,9 @@ class MusicController < ApplicationController
     puts from_date.inspect
     @x_data, @y_data  = FeedItem.data_for_streamgraph(from_date)
   end
+  
+  def articles
+    
+  end
 
 end

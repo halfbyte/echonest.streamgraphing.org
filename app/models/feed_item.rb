@@ -1,6 +1,5 @@
 class FeedItem < ActiveRecord::Base
   
-  
   ECHONEST_API_VERSION = "3"
   
   include HTTParty
@@ -60,7 +59,7 @@ class FeedItem < ActiveRecord::Base
   end
 
   def self.update
-    hottness_request = self.get("/get_top_hottt_artists", :query => {:api_key => ECHONEST_API_KEY, :version => ECHONEST_API_VERSION})
+    hottness_request = self.get("/get_top_hottt_artists", :query => { :api_key => SiteConfig::API_KEYS['echonest'], :version => ECHONEST_API_VERSION })
     artists = hottness_request["response"]["artists"]["artist"].map { |artist| artist["name"] }
     artists.each do |artist|
       urls = [

@@ -162,6 +162,13 @@ Raphael.fn.g.streamGraph = function(x, y, w, h, valuesx, valuesy, opts) {
     return this;    
   }
   
+  
+  chart.click = function (f) {      
+      segments.click(f);
+      return this;
+  };
+  
+  
   var forwardPathFor = function(data) {
     // TODO: Start-Splines brauchen Control-Point für Anfang!
     var path = "M" + x + " " + (middle - (data[0] * scale));
