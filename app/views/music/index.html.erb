@@ -2,6 +2,12 @@
 <script type="text/javascript" charset="utf-8">
   var graph = null;
   $(function() {
+    
+    
+    function loadArticles(artistName) {
+      $("#articles").load("<%= articles_path %>", "query=" + encodeURIComponent(artistName) );
+    }
+    
     var yd = <%= @y_data.to_json %>;
     var xd = <%= @x_data.to_json %>;
     var artists = <%= @artists.to_json %>;
@@ -10,12 +16,15 @@
       function() {
         this.attr({"fill-opacity":0.6});
         $("#artist_" + artists.indexOf(this.label)).addClass("active")
+        
       },
       function() {
         this.attr({"fill-opacity":1});
         $("#artist_" + artists.indexOf(this.label)).removeClass("active")
       }
-    );
+    ).click(function() {
+      loadArticles(this.label)
+    });
     
     $(".artist-highlight").mouseover(function() {
       $(this).addClass("active")
@@ -25,6 +34,8 @@
       $(this).removeClass("active");
       var artistIndex = this.id.match(/artist_(\d+)/)[1];
       graph.segments[artistIndex].attr({"fill-opacity":1});      
+    }).click(function() {
+      loadArticles($(this).text());
     })
     
   });
@@ -36,12 +47,13 @@
   <p>
     The visualisation follows the Streamgraph pattern as described by <a href="http://www.leebyron.com/else/streamgraph/">Lee Byron and Martin Wattenberg</a>.
     If you are interested, this currently uses the "wiggle" correction, as we have some problems with the "weighted wiggle" algo if the dataset is as sparse as ours.
-    The graph is rendered using a self written <a href="http://g.raphaeljs.com/">g.raphael</a> plugin which is not quite finished yet. (The obvious addition would be data labels of course).
+    The graph is rendered using a self written <a href="http://g.raphaeljs.com/">g.raphael</a> plugin which is not quite finished yet. You can find a rather current version in the 
   </p>
 </div>
 <div class="column width3 first">
   <div id="holder"></div>
 </div>
+
 <div class="column width1">
   <h3>Artists shown</h3>
   <ul>
@@ -53,3 +65,4 @@
     <label><%= select_tag("weeks", options_for_select([["all", ""], "12", "24", "53"], params[:weeks]), :onchange => "this.form.submit()") %> Weeks</label>
   <%- end -%>
 </div>
+<div class="column width4 first" id="articles"></div>

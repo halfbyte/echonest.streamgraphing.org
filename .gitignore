@@ -12,3 +12,5 @@ public/stylesheets/compiled/*
 tmp/output.xml
 scratch_directory
 data/
+db/*.sqlite3
+config/api_keys.yml
