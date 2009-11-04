@@ -41,7 +41,9 @@ class FeedItem < ActiveRecord::Base
       items_per_artist = {}
       
       items.each do |item|
-        items_per_artist[item.artist] = (items_per_artist[item.artist] ? items_per_artist[item.artist] + 1 : 1)
+        if artists.include?(item.artist)
+          items_per_artist[item.artist] = (items_per_artist[item.artist] ? items_per_artist[item.artist] + 1 : 1)
+        end
       end
       
       self.artists.length.times { |i| data[i] << 0 }
