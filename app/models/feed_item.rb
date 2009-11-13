@@ -29,7 +29,7 @@ class FeedItem < ActiveRecord::Base
     
     data = []
     weeks = []
-    self.artists.length.times { data << [] }
+    self.hottt_artists.length.times { data << [] }
     
     loop do
       year = min_year + ((min_week + current_week) / 53)
@@ -46,9 +46,11 @@ class FeedItem < ActiveRecord::Base
         end
       end
       
-      self.artists.length.times { |i| data[i] << 0 }
+      self.hottt_artists.length.times { |i| data[i] << 0 }
       items_per_artist.each do |artist, count|
-        data[artists.index(artist)][current_week] = count
+        if self.hottt_artists.include?(artist)
+          data[self.hottt_artists.index(artist)][current_week] = count
+        end
       end
       weeks[current_week] = "CW#{cw} #{year}"
       current_week += 1
@@ -60,10 +62,13 @@ class FeedItem < ActiveRecord::Base
     
   end
 
+  def self.hottt_artists
+    @@hottt_artists ||=
+      self.get("/get_top_hottt_artists", :query => { :api_key => SiteConfig::ECHONEST_KEY, :version => ECHONEST_API_VERSION })["response"]["artists"]["artist"].map { |artist| artist["name"] }
+  end
+
   def self.update
-    hottness_request = self.get("/get_top_hottt_artists", :query => { :api_key => SiteConfig::ECHONEST_KEY, :version => ECHONEST_API_VERSION })
-    artists = hottness_request["response"]["artists"]["artist"].map { |artist| artist["name"] }
-    artists.each do |artist|
+    self.hottt_artists.each do |artist|
       urls = [
         "http://developer.echonest.com/artist/#{artist}/news.rss",
         "http://developer.echonest.com/artist/#{artist}/blogs.rss"

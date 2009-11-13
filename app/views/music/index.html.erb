@@ -58,7 +58,7 @@
   <%- end -%>
   </ul>
   <%- form_tag(root_url, :method => :get) do -%>
-    <label><%= select_tag("weeks", options_for_select([["all", ""], "12", "24", "53"], params[:weeks]), :onchange => "this.form.submit()") %> Weeks</label>
+    <label><%= select_tag("weeks", options_for_select([["12", ""], "6", "24", "53"], params[:weeks]), :onchange => "this.form.submit()") %> Weeks</label>
   <%- end -%>
 </div>
 <div class="width4 first">
