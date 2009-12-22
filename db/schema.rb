@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091023094900) do
+ActiveRecord::Schema.define(:version => 20091222143347) do
 
   create_table "feed_items", :force => true do |t|
     t.string   "artist"
@@ -24,5 +24,7 @@ ActiveRecord::Schema.define(:version => 20091023094900) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "feed_items", ["pub_year", "pub_cw"], :name => "index_feed_items_on_pub_year_and_pub_cw"
 
 end
