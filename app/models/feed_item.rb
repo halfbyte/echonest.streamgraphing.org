@@ -1,9 +1,9 @@
 class FeedItem < ActiveRecord::Base
-
-  ECHONEST_API_VERSION = "3"
-
+  
+  ECHONEST_API_VERSION = "4"
+  
   include HTTParty
-  base_uri 'developer.echonest.com/api/'
+  base_uri 'developer.echonest.com/api/v4'
 
   def self.artists
     @@artists ||= FeedItem.all(:select => "DISTINCT(artist)").map(&:artist).sort
@@ -63,7 +63,7 @@ class FeedItem < ActiveRecord::Base
 
   def self.hottt_artists
     @@hottt_artists ||=
-      self.get("/get_top_hottt_artists", :query => { :api_key => SiteConfig::ECHONEST_KEY, :version => ECHONEST_API_VERSION })["response"]["artists"]["artist"].map { |artist| artist["name"] }
+      self.get("/artist/top_hottt", :query => {:format => 'json', :api_key => SiteConfig::ECHONEST_KEY })["response"]["artists"].map { |artist| artist["name"] }
   end
 
   def self.update
